@@ -1,0 +1,368 @@
+------------------------------后台---------------------------------
+var express = require('express');
+var router = express.Router();
+var sequelize = require('../models/ModelHeader')();
+var Msg = require('../models/MsgModel');
+
+/* GET home page. */
+//-------------------------发送消息------------------------------------
+router.post('/sendmsg', function(req, res, next) {// '/'根目录
+    loginbean = req.session.loginbean;
+    //定义全局的loginbean locals:全局
+     res.locals.loginbean = req.session.loginbean;
+    //接参
+     nicheng = req.body.nicheng;
+     arr = nicheng.split(';');
+     len = arr.length;
+     // 用昵称查找对应的id,
+     sql = 'select id from users where nicheng = ?';
+     flag = 0;
+     for(i = 0;i < len;i++){
+         sequelize.query(sql,{replacements:[arr[i]],type:sequelize.QueryTypes.QUERY}).then(function(rs){
+                 console.log(rs);
+                 rsjson = JSON.parse(JSON.stringify(rs[0]));//RowDataPacket转json,再转成json的对象格式
+                 if (rsjson.length == 0) {//如果未定义 则取反
+                    flag++;
+                    return;
+                 }
+                 console.log(rsjson);
+                 toid = rsjson[0].id;
+
+                 console.log('toid'+toid);
+                 
+                 // 插入消息列表
+                 sqlmsg = 'insert into msgs set sendid =?,toid =?,message =?';
+                 sequelize.query(sqlmsg,{replacements:[loginbean.id,toid,req.body.message],type:sequelize.QueryTypes.QUERY}).then(function(rs){
+                     // 更新users表，msgnum+1
+                     sqlupd = 'update users set msgnum = msgnum+1 where id = ?';
+                     sequelize.query(sqlupd,{replacements:[toid],type:sequelize.QueryTypes.QUERY}).then(function(rs){
+                     // 返回给客户端，客户端收到后弹成功，关闭模态框       
+                        flag++;
+                        if (flag == 0){     
+                         res.send('1');
+                        } 
+                     });
+          })
+     })
+   }
+          
+
+         // msg = {};
+         // msg.sendid = loginbean.id;
+         // msg.toid = toid;
+         // msg.message = req.body.message;
+         // Msg.create(msg).then(function(rs){//插入数据库--自动转换sql语句  用对象操作数据库中的数据
+         //   console.log('插入成功');  
+         // res.send('1');      
+         // })
+           
+         
+   }).catch(function(err){
+        // res.send('1');
+   });
+});
+
+//-----删除消息----------------------------------------
+router.get('/deleteNew', function(req, res, next) {
+    loginbean = req.session.loginbean;
+    res.locals.loginbean = loginbean;
+    id = req.query.id;
+    //---------------------sequelize写法 ---------------------------
+    Msg.destroy({'where':{'id':id}}).then(function(rs){
+    //将表内对应id的记录删除  
+       console.log('删除成功');
+       if(err){
+           console.log(err)
+       }
+       if(loginbean.role > 0){//判断登录的角色，跳转到相应的页面
+          res.redirect('/home');
+       }else{
+          res.redirect('/admin');
+       }
+    })     
+
+    //-------------------------SQL写法---------------------
+   /* loginbean = req.session.loginbean;
+    res.locals.loginbean = loginbean;
+  //用昵称去查找对应的id --user
+    id = parseInt(req.query.id);
+    console.log('------------------通过---------------');
+    sqldel = 'delete from msgs where id=? and toid=?';
+    sequelize.query(sqldel,{replacements:[id,loginbean.id]}).then(function(err,rs){
+            if(err){
+                console.log(err)
+            }
+            if(loginbean.role > 0){
+                res.redirect('/home');
+            }else{
+                res.redirect('/admin');
+            }
+        });*/
+    
+})
+
+
+
+//------------------------------回复消息------------------------------------
+router.post('/replynew', function(req, res, next) {// '/'根目录
+	loginbean = req.session.loginbean;
+	//定义全局的loginbean locals:全局
+	 res.locals.loginbean = req.session.loginbean;
+    //接参
+     nicheng = req.body.nicheng;
+	// 用昵称查找对应的id,
+	 sql = 'select id from users where nicheng = ?';
+	 sequelize.query(sql,{replacements:[nicheng],type:sequelize.QueryTypes.QUERY}).then(function(rs){
+         console.log(rs);
+         rsjson = JSON.parse(JSON.stringify(rs[0]));//RowDataPacket转json,再转成json的对象格式
+         console.log(rsjson);
+         toid = rsjson[0].id;
+         console.log(toid);
+         
+         // 插入消息列表
+         sqlmsg = 'insert into msgs set sendid =?,toid =?,message =?';
+         sequelize.query(sqlmsg,{replacements:[loginbean.id,toid,req.body.message],type:sequelize.QueryTypes.QUERY}).then(function(rs){
+             // 更新users表，msgnum+1
+             sqlupd = 'update users set msgnum = msgnum+1 where id = ?';
+	         sequelize.query(sqlupd,{replacements:[toid],type:sequelize.QueryTypes.QUERY}).then(function(rs){
+	         // 返回给客户端，客户端收到后弹成功，关闭模态框	            
+	             res.send('1');
+	         });
+         })
+         
+   }).catch(function(err){
+        // res.send('1');
+     });
+	
+});
+
+
+module.exports = router;
+
+
+
+
+-----------------------------------前端-------------------------------------
+<% include ../head %>
+<link rel="stylesheet" href="http://cache.amap.com/lbs/static/main.css?v=1.0"/>
+<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=1af25131c85dc9e1ead5c73bdee1dd0d"></script>
+<!-- 第三方加载的东西需要http骨架 head body 来读 homemap 可以 写样式，不可加载-->
+<script >
+    function renzheng(){ // AJax --局部变化
+        $('#main').load('/home/renzheng.html');
+    }
+
+    function homemap(){ // 阿贾克斯 --局部变化
+        $('#main').load('/home/homemap.html');
+    }   
+    function newMsg(){
+        sendMsgForm.reset();//清除昵称栏
+        titlelabel = '发送新消息';
+        $('myModalLabel').text(titlelabel);
+        $('#myModal').modal('show');
+
+    }
+    function reply(thisa,rid){ 
+        // $('#sendNewForm').hide();
+        // $('#replyNewForm').show();
+
+        // $('#nicheng').val(thisa.parentElement.parentElement.children[0].innerText);
+
+         //------------------------
+          reNicheng = thisa.parentElement.parentElement.children[0].innerText;
+          titlelabel ='回复'+ reNicheng;
+          sendMsgForm.nicheng.value = reNicheng +';';
+        $('myModalLabel').text(titlelabel);
+        $('#myModal').modal('show');
+
+        //-------------------------
+        //alert(thisa.parentElement.parentElement.children[0].innerText);//发送者昵称
+        //alert('回复：'+thisa.parentElement.parentElement.children[1].innerText);//回复内容
+        //alert(rid);//发送者id
+    }   
+//-------------------------------------------------------------------
+/*
+function reply(thisa,rid){
+        //alert(thisa.parentElement.parentElement.children[0].innerText);
+        //alert('回复:'+thisa.parentElement.parentElement.children[1].innerText);
+        //alert(rid);
+        var revert = thisa.parentElement.parentElement.children[0].innerText; 
+        var div = document.getElementById('re1');   
+        div.innerHTML=revert;
+
+        $('#nc').val(revert);
+         
+         var revert1 = thisa.parentElement.parentElement.children[1].innerText; 
+         div = document.getElementById('revert1');  
+         div.innerHTML=revert1;
+         
+
+        $('#myModal').modal('show');
+        $('#sendNewForm').hide();
+        $('#replyMsg').show();
+       
+    }
+//-----------------------form表单----------------------------------
+<!-- 回复消息表单 -->
+<form id='replyMsgForm'  name='replyMsgForm' action="./replyMsg" onsubmit="return replyMsg();">
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">回复消息</h4>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        收件人:<div id="re1"></div>
+        内容：<div id="revert1"></div>
+        <input type="hidden" name="nicheng1" id="nc">
+        <textarea name='message1' class="form-control" rows="6" placeholder="请输入回复内容"></textarea>
+
+      </div>
+    </div>
+    <div class="modal-footer" style='text-align: center'>
+        <button type="submit" class="btn btn-primary" onclick="replyMsg()">发送</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+    </div>
+</div>
+</form>
+*/
+//-------------------------------------------------------------------
+
+function deleteNew(delid){
+    if (confirm('确定删除这条消息吗?')){//confirm -- js询问框
+      location.href = '/msg/deleteNew?id='+delid;
+      //location.href 本页面提交
+    }
+   }
+</script>
+<div class="row">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-2" style="background-color: #aaa; border-radius:10px;">
+        <% include ./homeleft %>
+    </div>
+    <div class="col-sm-7" id ='main'>
+                        
+        <table class="table table-bordered">
+          <caption>
+               消息列表
+                   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="float: right;" onclick="newMsg()">新消息</button>
+          </caption>
+          <thead>
+            <tr>
+              <th>发送者</th>
+              <th>内容</th>
+              <th>发送时间</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+             <% rs.forEach(function(row){ %>
+                <tr> 
+                 <!--  < % - row. % > %和 - 之间不能有空格，且服务器可读注释后的 < %-->
+                  <td><%-row.nicheng%></td>
+                  <!-- - row 显示html代码 - - row 显示 字符串 -->
+                  <td><%-row.message%></td>
+                  <td>
+                  <%
+                     time = row.createtime;
+                  %>
+                    <%-time.getFullYear()%>年
+                    <%-time.getMonth()+1%>月
+                    <%-time.getDate()%>日
+                    </td>
+                  <td>
+                    <a href="#" data-toggle="modal" data-target="#myModal" onclick='reply(this,<%-row.sendid%>)'> 回复 </a>&nbsp;<!-- 返回this都是前面的标签 -->
+                    <a href="#" onclick="deleteNew(<%-row.id%>)">删除</a>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+        </table>
+
+    </div>
+    <div class="col-sm-1"></div>
+       <!-- - -  - - - - - - - 模态框function- - - - - - -  - - - - -->
+         <script>
+            function onSendMsg(){//异步方法，$.post与 return 都是一个方法，两个同时执行
+                $.post('/msg/sendmsg',$('#sendMsgForm').serialize(),function(rehtml){
+                //serialize()提交表单中的所有元素
+                    if(rehtml==1){
+                        alert('发送成功');
+                        $('#myModal').modal('hide');
+                    }else{
+                        alert('发送失败');
+                    }
+                });
+                return false;//不可改成true ，防止 ajax未与数据库交互完成就提交
+            }
+            function onReplyNew(){
+                $.post('/msg/sendnew',$('#replyNewForm').serialize(),function(rehtml){
+                //serialize()提交表单中的所有元素
+                    if(rehtml==1){
+                        alert('回复成功');
+                        $('#myModal').modal('hide');
+                    }else{
+                        alert('回复失败');
+                    }
+                });
+                return false;
+            }
+            function newclose(){
+              $('#sendNewForm').hide();
+              $('#replyNewForm').show();
+            }
+           function replyclose(){
+              $('#replyNewForm').hide();
+              $('#sendNewForm').show();
+            }
+
+          </script>
+          <!-- 模态框 -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+               <!--  - - - - -  - - - - -发送新消息 - start- - - - - - - -   -->
+                <form id='sendMsgForm' name='sendMsgForm' style="display: none;" onsubmit="return onSendMsg();">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">发送新消息</h4>
+                        </div>
+                        <div class="modal-body">
+                          <div class="form-group">
+                            <input type="text" class="form-control" name="nicheng" placeholder="请输入收件人昵称，多人请用英文分号(;)分割"><br/>
+                            <textarea name='message' class="form-control" rows="6" placeholder="请输入消息内容"></textarea>
+                          </div>
+                        </div>
+                        <div class="modal-footer" style='text-align: center'>
+                            <button type="submit" class="btn btn-primary">发送</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="newclose()">关闭</button>
+                        </div>
+                    </div>
+                   </form>
+                   <!--  - - - - -  - - - - -发送新消息 - end- - - - - - - -   -->
+                   <!--  - - - - -  - - - - -回复 - start- - - - - - - -   -->
+                  <form id='replyNewForm' name='replyNewForm' style="display: none;" onsubmit="return onReplyNew();">
+                  <!-- onsubmit 若无return 则默认为post表单提交 是个有返回值的方法，返回值为true的时候提交 -->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">消息回复</h4>
+                        </div>
+                        <div class="modal-body">
+                          <div class="form-group">
+                            <input type="text" class="form-control" id='nicheng' name="nicheng" placeholder="请输入收件人昵称"><br/>
+                            <textarea name='message' class="form-control" rows="6" placeholder="请输入消息内容"></textarea>
+                          </div>
+                        </div>
+                        <div class="modal-footer" style='text-align: center'>
+                            <button type="submit" class="btn btn-primary">发送</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" >关闭</button>
+                        </div>
+                    </div>
+                   </form>
+                   <!--  - - - - -  - - - - -回复 - end- - - - - - - -   -->
+                </div>
+            </div>
+
+  </body>
+</html> 
