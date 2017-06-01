@@ -1,0 +1,165 @@
+	*{
+		margin:0;
+		padding:0;
+	}
+	
+	body{
+		background:url(../img/9.jpg);
+	}
+	.box{
+		width:1000px;
+		height:1000px;
+		margin:100px auto;
+		
+		position:relative;
+	}
+	/*圆轮*/
+	.d1{
+		width:768px;
+		height:768px;
+		background:url(../img/mtl.png);
+		position:relative;
+		margin:0 auto;
+		/*/应用动画*/
+		-webkit-animation:dlz 10s linear infinite;
+		-moz-animation:dlz 10s linear infinite;
+		-ms-animation:dlz 10s linear infinite;
+		-o-animation:dlz 10s linear infinite;
+	}
+	.d2{
+		list-style:none;
+	}
+	.d2 li{
+		border-radius:50%;
+		border:1px solid gainsboro;
+		background-size:cover;
+		width:130px;
+		height:170px;
+		
+		position:absolute;
+		
+		/*旋转的中心*/
+		transform-origin:50% 0;
+		/*应用动画*/
+		-webkit-animation:xlz 10s linear infinite;
+		-moz-animation:xlz 10s linear infinite;
+		-ms-animation:xlz 10s linear infinite;
+		-o-animation:xlz 10s linear infinite;
+
+	}
+	/*nth-child 是css3 伪类选择器*/
+	li:nth-child(1){
+		border:1px solid yellow;
+		background-image:url(../img/1.jpg);
+		
+		top:136px;
+		left:83px;
+	}
+	li:nth-child(2){
+		background-image:url(../img/2.jpg);
+		top:31px;
+		left:318px;
+	}
+	li:nth-child(3){
+		background-image:url(../img/3.jpg);
+		top:131px;
+		left:572px;
+	}
+	li:nth-child(4){
+		background-image:url(../img/4.jpg) ;
+		top:379px;
+		left:669px;
+	}
+	li:nth-child(5){
+		background-image:url(../img/5.jpg);
+		top:386px;
+		left:-29px;
+	}
+	li:nth-child(6){
+		background-image:url(../img/6.jpg) ;
+		top:638px;
+		left:80px;
+	}
+	li:nth-child(7){
+		background-image:url(../img/7.jpg) ;
+		top:740px;
+		left:324px;
+	}
+	li:nth-child(8){
+		background-image:url(../img/8.jpg);
+		top:638px;
+		left:581px;
+	}
+	/*大标题*/
+	.d3{
+		background: url(../img/dbt.png);
+		width:577px;
+		height:257px;
+		position:absolute;
+		top:271px;
+		left:208px;
+		/*z-index是层的意思,默认的值是0; 他一般与定位position在一起*/
+		z-index:10;
+	}
+	/*小标题*/
+	.d4{
+		background:url(../img/xbt.png);
+		width:413px;
+		height:139px;
+		position:absolute;
+		top:487px;
+		left:288px;
+		
+		z-index:10;
+
+	}
+	/*箭头标*/
+	.d5{
+		background:url(../img/jiantou.png);
+		width:48px;
+		height:64px;
+		position:absolute;
+		top:576px;
+		left:478px;
+		z-index:10;
+	}
+	/*外部支架*/
+	.d6{
+		width:358px;
+		height:529px;
+		background:url(../img/zhijia.png);
+		position:absolute;
+		top:469px;
+		left:317px;
+		z-index:2;
+	}
+	/*内侧支架*/
+	.d7{
+		width:347px;
+		height:505px;
+		background:url(../img/zhijia1.png) no-repeat;
+		position:absolute;
+		top:469px;
+		left:373px;
+		z-index:-10;
+	}
+	/*分别定义两个关键帧*/
+	
+	@keyframes dlz{
+		0%{
+			-webkit-transform:rotate(0deg); 
+		}
+		100%{
+			-webkit-transform:rotate(360deg); 
+		}
+	}
+	
+	
+	@keyframes xlz{
+		0%{
+			-webkit-transform:rotate(0deg);
+		}
+		100%{
+			-webkit-transform:rotate(-360deg);
+		}
+	}

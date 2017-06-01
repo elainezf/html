@@ -1,0 +1,109 @@
+@charset 'utf-8';
+*{
+	margin:0px;
+	padding:0px;
+}
+a{
+	text-decoration: none;
+}
+ul li{
+	list-style: none;
+}
+/*头部部分*/
+.head{
+	height: 54px;
+	background-color:#343231;
+	line-height: 50px;
+}
+.head a{
+	color: #ffffff;
+}
+.wp{
+	width: 1000px;
+	margin: 0px auto;
+}
+.head .left{
+	float: left;
+	color: #ffffff;
+	font-family: Arial;
+	font-size: 12px;
+}
+.head .left .left-1{
+	display: block;
+	float:left;
+	padding-top: 15px;
+	padding-right: 5px;
+}
+.head .left .left-2{
+	display: block;
+	float:right;
+	padding-top:18px;
+	padding-left: 5px;
+}
+ .head .clear{
+ 	clear: both;
+ }
+/* 导航部分*/
+.navigator{
+	height: 99px;
+	background: url(../images/head-beijing.png) repeat-y;
+	background-size: 100%;
+	width:100%;
+
+}
+.navigator img{
+	display: block;
+	float: left;
+	padding-top: 25px;
+	padding-left:35px;
+}
+/*页面底部部分*/
+.footer{
+	/*height: 400px;*/
+	background-color:#343231;
+	color: #ffffff;
+	font-size: 16px;
+}
+.footer .footer-up{
+	height: 152px;
+    padding: 0 150px;
+    border-bottom: 1px solid #ffffff;
+ }
+.footer .footer-up ul li{
+    float: left;
+	display: block;
+	border-right: 1px solid #ffffff;
+	margin-top: 75px;
+}
+.footer .footer-up ul li:last-child{
+	border:none;
+}
+.footer .footer-up a{
+	padding: 20px;
+	font-family: 微软雅黑;
+	color: #ffffff;
+}
+.footer .footer-bottom{
+	margin-top: 20px;
+	text-align: center;
+}
+.footer-bottom strong{
+	display: inline-block;
+	height:50px;
+	background: url(../images/photo.png) 0 0 no-repeat;
+	font-size: 35px;
+	padding-left:45px;
+}
+.footer-bottom p{
+	font-family: Arial;
+	font-size: 16px;
+	padding: 10px 0;
+	margin-top: 10px;
+}
+.footer-bottom p span{
+	font-family: 幼圆;
+}
+.footer .clear{
+	clear: both;
+}
+

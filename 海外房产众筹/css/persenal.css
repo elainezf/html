@@ -1,0 +1,415 @@
+@charset 'utf-8'
+*{
+	margin: 0px;
+	padding: 0px;
+}
+a{
+	text-decoration: none;
+}
+ul li{
+	list-style: none;
+}
+/*头部部分*/
+.head{
+	height: 54px;
+	background-color:#343231;
+	line-height: 50px;
+}
+.head a{
+	color: #ffffff;
+}
+.wp{
+	width: 1000px;
+	margin: 0px auto;
+}
+.head .left{
+	float: left;
+	color: #ffffff;
+	font-family: Arial;
+	font-size: 12px;
+}
+.head .left .left-1{
+	display: block;
+	float:left;
+	padding-top: 15px;
+	padding-right: 5px;
+}
+.head .left .left-2{
+	display: block;
+	float:right;
+	padding-top:18px;
+	padding-left: 5px;
+}
+/*头部右边部分*/
+
+.head .right span{
+	color: #ffffff;
+}
+.head .right ul li{
+	display: block;
+	float:right;
+	font-size: 12px;
+	font-family: 微软雅黑;
+	padding: 0 8px;
+}
+.head .right ul li img{
+	position: relative;
+	top: 8px;
+
+}
+ .head .clear{
+ 	clear: both;
+}
+/* 导航部分*/
+.navigator{
+	height: 99px;
+	background: url(../images/head-beijing.png) repeat-y;
+	background-size: 100%;
+	width:100%;
+
+}
+.navigator img{
+	display: block;
+	float: left;
+	padding-top: 25px;
+	padding-left:35px;
+}
+
+/*导航部分*/
+.nav-2 table{
+	width: 110px;
+	margin-left: 80px;
+	border-radius: 30px;
+	float: right;
+	margin-top: 20px;
+}
+ .nav-2 table a{
+	color: #ffffff;
+	font-size:20px;
+	font-family: 微软雅黑;
+}
+ .nav-2 table td{
+	text-align: center;
+	padding: 0 30px;
+}
+.nav-2 .c1:hover{
+	border: 1px solid #ffffff;
+}
+/*中间内容部分*/
+/*.main{
+	height:3000px;
+}*/
+.anli img{
+	width: 100%
+}
+.wp2{
+	width: 1170px;
+	margin:0px auto;
+}
+.main-top{
+	overflow:hidden;
+}
+.main-top .left{
+	width: 490px;
+	height:95px;
+	float: left;
+	border-bottom: 1px solid #9e9a9a;
+}
+.main-top .center{
+	width:190px;
+	height:200px;
+	float: left;
+	line-height:100px;
+	text-align: center;
+
+}
+.main-top .center strong{
+	display: block;
+	padding-top:35px;
+	font-size: 36px;
+	font-family:幼圆;
+}
+.main-top .right{
+	width: 490px;
+	height:95px;
+	float: right;
+	border-bottom: 1px solid 
+}
+.main-bottom{
+	margin:0 260px;
+}
+.main-bottom .left img{
+   float: left;
+}
+.main-bottom .right{
+	position: relative;
+	top: 25px;
+	height: 144px;
+	float:right;
+}
+.main-bottom strong{
+	font-size: 22px;
+	font-family: 微软雅黑;
+}
+.main-botom p{
+	font-size: 14px;
+	font-family: 微软雅黑;
+}
+.main-bottom a{
+	display: block;
+	font-size: 14px;
+	color: #646464;
+	float: right;
+}
+.bottom-1,.bottom-2,.bottom-3{
+	overflow: hidden;
+	margin:50px 0;
+}
+.main-down .down-1{
+	overflow:hidden;
+}
+.main-down .down-1 .left{
+	width: 490px;
+	height:95px;
+	float: left;
+	border-bottom: 1px solid #9e9a9a;
+}
+.main-down .down-1 .center{
+	width:190px;
+	height:200px;
+	float: left;
+	line-height:100px;
+	text-align: center;
+
+}
+.main-down .down-1 .center strong{
+	display: block;
+	padding-top:35px;
+	font-size: 36px;
+	font-family:幼圆;
+}
+.main-down .down-1 .right{
+	width: 490px;
+	height:95px;
+	float: right;
+	border-bottom: 1px solid 
+}
+.main-down .down-2 {
+	height: 700px;
+}
+.down-2 .a1{
+	position: relative;
+	top:40px;
+	margin:0 auto;
+    height: 612px;
+	width: 612px;
+	border: 1px solid #009af9;
+	border-radius: 306px;
+	z-index: 1;
+}
+.down-2 .a2{
+	height: 170px;
+	width: 170px;
+	border-radius:85px;
+	border:1px solid #009af9;
+	background:url(../images/dians.jpg) center center no-repeat;
+	z-index: 2;
+	margin:0 auto;
+	margin-top:220px;
+}
+.a3,.a4,.a5,.a6,.a7,.a8,.a9,.a10{
+	height: 80px;
+	width: 210px;
+	border-radius: 40px;
+	border:1px solid #009af9;
+	text-align: center;
+	line-height: 80px;
+	position: relative;
+	background-color: #ffffff;
+}
+.a3,.a10{
+	margin: 0 auto;
+}
+.a3{
+	/*position: relative;*/
+	top: -435px;
+}
+.a10{
+	/*position: relative;*/
+	top: -396px;
+}
+.a4{
+/*	position: relative;*/
+	top: -212px;
+	left: -107px;
+}
+.a5{
+/*	position: relative;*/
+	top: -295px;
+	left: 505px;
+}
+.a6{
+	top: -550px;
+	left: 452px;
+}
+.a7{
+	top: -630px;
+	left: -52px;
+}
+.a8{
+	top: -370px;
+	left: -55px;
+}
+.a9{
+	top: -450px;
+	left: 453px;
+}
+.a3:hover{
+	cursor: pointer;
+	background:url(../images/beijing3.jpg) 0 0 repeat-x;
+	background-size: 100%;
+}
+.a4:hover{
+	cursor: pointer;
+	background:url(../images/beijing3.jpg) 0 0 repeat-x;
+	background-size: 100%;
+}
+.a5:hover{
+	cursor: pointer;
+	background:url(../images/beijing3.jpg) 0 0 repeat-x;
+	background-size: 100%;
+}
+.a6:hover{
+	cursor: pointer;
+	background:url(../images/beijing3.jpg) 0 0 repeat-x;
+	background-size: 100%;
+}
+.a7:hover{
+	cursor: pointer;
+	background:url(../images/beijing3.jpg) 0 0 repeat-x;
+	background-size: 100%;
+}
+.a8:hover{
+	cursor: pointer;
+	background:url(../images/beijing3.jpg) 0 0 repeat-x;
+	background-size: 100%;
+}
+.a9:hover{
+	cursor: pointer;
+	background:url(../images/beijing3.jpg) 0 0 repeat-x;
+	background-size: 100%;
+}
+.a10:hover{
+	cursor: pointer;
+	background:url(../images/beijing3.jpg) 0 0 repeat-x;
+	background-size: 100%;
+}
+.down-2 a{
+	font-size: 20px;
+	font-family: 微软雅黑;
+	color: #333333;
+}
+.main-down .down-3{
+	overflow:hidden;
+}
+.main-down .down-3 .left{
+	width: 490px;
+	height:95px;
+	float: left;
+	border-bottom: 1px solid #9e9a9a;
+}
+.main-down .down-3 .center{
+	width:190px;
+	height:200px;
+	float: left;
+	line-height:100px;
+	text-align: center;
+
+}
+.main-down .down-3 .center strong{
+	display: block;
+	padding-top:35px;
+	font-size: 36px;
+	font-family:幼圆;
+}
+.main-down .down-3 .right{
+	width: 490px;
+	height:95px;
+	float: right;
+	border-bottom: 1px solid 
+}
+.down-4{
+	overflow: hidden;
+	width: 1100px;
+	margin: 0 auto;
+}
+.down-4 .left{
+	float: left;
+}
+.down-4 .right{
+	float: right;
+}
+.down-4 strong{
+	font-family: 微软雅黑;
+	font-size:22px;
+}
+.down-4 p{
+	font-family:微软雅黑;
+	font-size: 14px;
+}
+.down-4 .left-1,.down-4 .right-1{
+	margin-bottom: 70px;
+}
+.down-4 .left-2,.down-4 .right-2{
+	margin-bottom: 180px;
+}
+/*页面底部部分*/
+.footer{
+	/*height: 400px;*/
+	background-color:#343231;
+	color: #ffffff;
+	font-size: 16px;
+}
+.footer .footer-up{
+	height: 152px;
+    padding: 0 150px;
+    border-bottom: 1px solid #ffffff;
+ }
+.footer .footer-up ul li{
+    float: left;
+	display: block;
+	border-right: 1px solid #ffffff;
+	margin-top: 75px;
+}
+.footer .footer-up ul li:last-child{
+	border:none;
+}
+.footer .footer-up a{
+	padding: 20px;
+	font-family: 微软雅黑;
+	color: #ffffff;
+}
+.footer .footer-bottom{
+	margin-top: 20px;
+	text-align: center;
+}
+.footer-bottom strong{
+	display: inline-block;
+	height:50px;
+	background: url(../images/photo.png) 0 0 no-repeat;
+	font-size: 35px;
+	padding-left:45px;
+}
+.footer-bottom p{
+	font-family: Arial;
+	font-size: 16px;
+	padding: 10px 0;
+	margin-top: 10px;
+}
+.footer-bottom p span{
+	font-family: 幼圆;
+}
+.footer .clear{
+	clear: both;
+}
+
